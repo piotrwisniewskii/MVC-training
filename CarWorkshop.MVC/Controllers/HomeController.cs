@@ -23,7 +23,7 @@ public class HomeController : Controller
         var about = new AboutModel();
         about.Title = "O mnie";
         about.Description = "Rozpoczynam nową przygodę!";
-        about.Tags = new[] { "To", "Tamto", "Owo" };
+        about.Tags = new List<string> {"to","tamto","siamto" };
         return View(about);
     }
 

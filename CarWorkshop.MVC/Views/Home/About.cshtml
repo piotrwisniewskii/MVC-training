@@ -1,7 +1,17 @@
 ﻿@model AboutModel
 
-    <h1>@Model.Title</h1>
-    <div>@Model.Description</div>
-    <p>@Model.Tags[0]</p>
-    <p>@Model.Tags[1]</p>
-    <p>@Model.Tags[2]</p>
+  <div class="alert alert-primary" role="alert">
+  @Model.Title
+</div>
+     <div class="alert alert-success" role="alert">
+  @Model.Description
+</div>
+<p>Tags</p>
+<ul>
+@{
+    foreach (var item in Model.Tags)
+    {
+        <li>@item</li>
+    }
+}
+</ul>
