@@ -1,0 +1,14 @@
+﻿@model ListGenerator
+
+<h1>List</h1>
+        <ul>
+        <div>Imie</div>
+@{
+ foreach (var item in Model.playerList)
+    {
+        <li>
+        @item;
+        </li>
+    }
+}
+        </ul>
