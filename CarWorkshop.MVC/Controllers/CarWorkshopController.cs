@@ -12,6 +12,12 @@ namespace CarWorkshop.MVC.Controllers
             _carWorkshopeService = carWorkshopeService;
         }
 
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+
         [HttpPost]
         public async Task <IActionResult> Create(Domain.Entities.CarWorkshop carWorkshop)
         {
