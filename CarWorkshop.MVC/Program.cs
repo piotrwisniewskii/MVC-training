@@ -1,8 +1,12 @@
+using CarWorkshop.Infrastructure.Persistance;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddDbContext<CarWorkshopDbContext>(options => options
+.UseSqlServer(builder.Configuration.GetConnectionString("CarWorkshop")));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

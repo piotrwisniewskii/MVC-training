@@ -23,7 +23,7 @@ public class HomeController : Controller
         var about = new AboutModel();
         about.Title = "O mnie";
         about.Description = "Rozpoczynam nową przygodę!";
-        about.Tags = new List<string> {"to","tamto","siamto" };
+        about.Tags = new List<string> { "to", "tamto", "siamto" };
         return View(about);
     }
 
@@ -38,19 +38,6 @@ public class HomeController : Controller
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 
-    public IActionResult listGenerator()
-    {
-        var list = new ListGenerator();
-        list.playerList.AddRange(new List<string> { "piotr", "łotr", "kot", "bot" });
-        return View(list);
-    }
 
-    public IActionResult RandomListGenerator()
-    {
-        var list = new ListGenerator();
-        var random = new Random();
-        list.playerList.AddRange(new List<string> { "piotr", "łotr", "kot", "bot" });
-        var randomizedList = random.Next(list.playerList.Count);
-        return View(randomizedList);
-    }
 }
+
