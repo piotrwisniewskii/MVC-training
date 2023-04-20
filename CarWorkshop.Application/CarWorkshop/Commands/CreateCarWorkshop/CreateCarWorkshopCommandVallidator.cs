@@ -1,11 +1,11 @@
 ﻿using CarWorkshop.Domain.Interfaces;
 using FluentValidation;
 
-namespace CarWorkshop.Application.CarWorkshop
+namespace CarWorkshop.Application.CarWorkshop.Commands.CreateCarWorkshop
 {
-    public class CarWorkshopDtoVallidator : AbstractValidator<CarWorkshopDto>
+    public class CreateCarWorkshopCommandVallidator : AbstractValidator<CreateCarWorkshopCommand>
     {
-        public CarWorkshopDtoVallidator(ICarWorkshopRepository repository)
+        public CreateCarWorkshopCommandVallidator(ICarWorkshopRepository repository)
         {
             RuleFor(c => c.Name)
                 .NotEmpty()
@@ -14,7 +14,7 @@ namespace CarWorkshop.Application.CarWorkshop
                 .Custom((value, context) =>
                 {
                     var existingCarWorkshop = repository.GetByName(value).Result;
-                    if (existingCarWorkshop != null) 
+                    if (existingCarWorkshop != null)
                     {
                         context.AddFailure("There is already such CarWorkshop name");
                     }
@@ -23,7 +23,7 @@ namespace CarWorkshop.Application.CarWorkshop
             RuleFor(d => d.Description)
                 .NotEmpty().WithMessage("Please eneter description");
 
-            RuleFor(pn=>pn.PhoneNumber)
+            RuleFor(pn => pn.PhoneNumber)
                 .MinimumLength(8)
                 .MaximumLength(12);
         }
