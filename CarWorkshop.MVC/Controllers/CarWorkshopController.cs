@@ -1,6 +1,7 @@
 ﻿using CarWorkshop.Application.CarWorkshop;
 using CarWorkshop.Application.CarWorkshop.Commands.CreateCarWorkshop;
 using CarWorkshop.Application.CarWorkshop.Commands.Queries;
+using CarWorkshop.Application.CarWorkshop.Commands.Queries.GetCarWorkshopByEncodedName;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,9 +28,10 @@ namespace CarWorkshop.MVC.Controllers
         }
 
         [Route("CarWorkshop/{encodedName}/Details")]
-        public IActionResult Details(string encodedName)
+        public async Task<IActionResult> Details(string encodedName)
         {
-            return View();
+            var dto = await _mediator.Send(new GetCarWorkshopByEncodedNameQuery(encodedName));
+            return View(dto);
         }
 
 
