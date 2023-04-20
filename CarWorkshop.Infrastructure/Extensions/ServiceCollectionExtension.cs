@@ -1,16 +1,10 @@
-﻿using CarWorkshop.Application.Services;
-using CarWorkshop.Domain.Interfaces;
+﻿using CarWorkshop.Domain.Interfaces;
 using CarWorkshop.Infrastructure.Persistance;
 using CarWorkshop.Infrastructure.Repositories;
 using CarWorkshop.Infrastructure.Seeders;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CarWorkshop.Infrastructure.Extensions
 {
@@ -24,7 +18,7 @@ namespace CarWorkshop.Infrastructure.Extensions
             services.AddScoped<CarWorkshopSeeder>();
 
             services.AddScoped<ICarWorkshopRepository,CarWorkshopRepository>();
-   
+
         }
     }
 }

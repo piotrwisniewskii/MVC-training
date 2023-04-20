@@ -26,6 +26,12 @@ namespace CarWorkshop.MVC.Controllers
             return View();
         }
 
+        [Route("CarWorkshop/{encodedName}/Details")]
+        public IActionResult Details(string encodedName)
+        {
+            return View();
+        }
+
 
         [HttpPost]
         public async Task <IActionResult> Create(CreateCarWorkshopCommand command)
