@@ -5,6 +5,7 @@ using CarWorkshop.Application.CarWorkshop.Commands.EditCarWorkshop;
 using CarWorkshop.Application.CarWorkshop.Commands.Queries;
 using CarWorkshop.Application.CarWorkshop.Commands.Queries.GetCarWorkshopByEncodedName;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
@@ -13,8 +14,7 @@ namespace CarWorkshop.MVC.Controllers
     public class CarWorkshopController : Controller
     {
         private readonly IMediator _mediator;
-
-        public IMapper _mapper;
+        private readonly IMapper _mapper;
 
         public CarWorkshopController(IMediator mediator,IMapper mapper)
         {
@@ -28,10 +28,6 @@ namespace CarWorkshop.MVC.Controllers
             return View(carWorkshops);
         }
 
-        public IActionResult Create()
-        {
-            return View();
-        }
 
         [Route("CarWorkshop/{encodedName}/Details")]
         public async Task<IActionResult> Details(string encodedName)
@@ -45,6 +41,11 @@ namespace CarWorkshop.MVC.Controllers
         public async Task<IActionResult> Edit(string encodedName)
         {
             var dto = await _mediator.Send(new GetCarWorkshopByEncodedNameQuery(encodedName));
+
+            if(!dto.isDeitable)
+            {
+                return RedirectToAction("NoAcces", "Home");
+            }
 
             EditCarWorkshopCommand model = _mapper.Map<EditCarWorkshopCommand>(dto);
 
@@ -70,14 +71,21 @@ namespace CarWorkshop.MVC.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize]
+        public IActionResult Create()
+        {
+            return View();
+        }
 
         [HttpPost]
+        [Authorize]
         public async Task <IActionResult> Create(CreateCarWorkshopCommand command)
         {
             if (!ModelState.IsValid)
             {
                 return View(command);
             }
+
             await _mediator.Send(command);
             return RedirectToAction(nameof(Index));
         }

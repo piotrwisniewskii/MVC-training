@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarWorkshop.Infrastructure.Migrations
 {
     [DbContext(typeof(CarWorkshopDbContext))]
-    [Migration("20230421084542_Identity")]
-    partial class Identity
+    [Migration("20230421114005_initi")]
+    partial class initi
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,6 +39,9 @@ namespace CarWorkshop.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -51,6 +54,8 @@ namespace CarWorkshop.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
 
                     b.ToTable("CarWorkshops");
                 });
@@ -200,10 +205,12 @@ namespace CarWorkshop.Infrastructure.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -240,10 +247,12 @@ namespace CarWorkshop.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -255,6 +264,10 @@ namespace CarWorkshop.Infrastructure.Migrations
 
             modelBuilder.Entity("CarWorkshop.Domain.Entities.CarWorkshop", b =>
                 {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
                     b.OwnsOne("CarWorkshop.Domain.Entities.CarWorkshopContactDetails", "ContactDetails", b1 =>
                         {
                             b1.Property<int>("CarWorkshopId")
@@ -282,6 +295,8 @@ namespace CarWorkshop.Infrastructure.Migrations
 
                     b.Navigation("ContactDetails")
                         .IsRequired();
+
+                    b.Navigation("CreatedBy");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
