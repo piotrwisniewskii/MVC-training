@@ -74,6 +74,10 @@ namespace CarWorkshop.MVC.Controllers
         [Authorize]
         public IActionResult Create()
         {
+            if (!User.IsInRole("Admin"))
+            {
+                return RedirectToAction("NoAccess","Home");
+            }
             return View();
         }
 
