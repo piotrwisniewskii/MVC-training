@@ -1,7 +1,13 @@
-﻿@*@{
+﻿@using Newtonsoft.Json;
+@*@{
     var currentUrl = ViewContext{}
 }
 *@
+@{
+    var notification = TempData["Notification"] != null ? (Notification)JsonConvert.DeserializeObject<Notification>(TempData["Notification"]!
+    .ToString()!)! : null;
+
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
