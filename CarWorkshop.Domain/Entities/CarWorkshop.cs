@@ -17,6 +17,8 @@ namespace CarWorkshop.Domain.Entities
         public CarWorkshopContactDetails ContactDetails { get; set; } = default!;
         public string EncodedName { get; private set; } = default!;
 
+        public List<CarWorkshopService> Services { get; set; } = new();
+
         public string? CreatedById { get; set; }
         public IdentityUser? CreatedBy { get; set; }
 
